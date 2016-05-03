@@ -1,0 +1,25 @@
+a {
+	color:#000;
+	text-decoration: none; 
+}
+
+	a:hover {
+		color:#000;
+		text-decoration: underline; 
+	}
+
+	a img { 
+		border: 0;
+	}
+
+.tlcenter{
+	text-align: center;
+}
+
+.tlright{
+	text-align: right;
+}
+
+.cb{
+	clear: both;
+}

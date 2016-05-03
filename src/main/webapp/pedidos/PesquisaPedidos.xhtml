@@ -1,0 +1,89 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Pesquisa de pedidos</ui:define>
+
+	<ui:define name="corpo">
+		<h:form>
+			<h1>Pesquisa de pedidos</h1>
+
+			<p:toolbar styleClass="menuTopo">
+				<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" />
+				</p:toolbarGroup>
+				<p:toolbarGroup align="right">
+					<p:button value="Novo" outcome="/pedidos/CadastroPedido" />
+				</p:toolbarGroup>
+			</p:toolbar>
+
+			<p:panelGrid columns="2" id="painel" styleClass="panelCadastro"
+				columnClasses="rotulo, campo">
+				<p:outputLabel value="Número" />
+				<h:panelGroup>
+					<p:inputText size="20" />
+					<span>a </span>
+					<p:inputText size="20" />
+				</h:panelGroup>
+				
+				<p:outputLabel value="Data de criação" />
+				<h:panelGroup>
+					<p:calendar size="10" pattern="dd/MM/yyyy" />
+					<span>a </span>
+					<p:calendar size="10" pattern="dd/MM/yyyy" />
+				</h:panelGroup>
+
+				<p:outputLabel value="Vendedor" />
+				<p:inputText size="40" />
+				
+				<p:outputLabel value="Cliente" />
+				<p:inputText size="40" />
+				
+				<p:outputLabel value="Status" />
+				<p:selectManyCheckbox>
+					<f:selectItem itemLabel="Orçamento" />
+					<f:selectItem itemLabel="Emitido" />
+					<f:selectItem itemLabel="Cancelado" />
+				</p:selectManyCheckbox>
+			</p:panelGrid>
+			
+			<p:dataTable id="pedidosTable" value="#{pesquisaPedidosBean.pedidosFiltrados}" var="pedido"
+				styleClass="tablePedidos" emptyMessage="Nenhum produto encontrado." rows="20"
+				paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+				
+				<p:column headerText="Número" styleClass="tlcenter" style="width: 100px;">
+					<h:outputText value="12345" />
+				</p:column>
+				
+				<p:column headerText="Cliente">
+					<h:outputText value="Supermercado Baratão" />
+				</p:column>
+				
+				<p:column headerText="Vendedor">
+					<h:outputText value="José Pesqueiro" />
+				</p:column>
+				
+				<p:column headerText="Data de criação" styleClass="tlcenter" style="width: 140px;">
+					<h:outputText value="04/05/2016" />
+				</p:column>
+				
+				<p:column headerText="Valor total" styleClass="tlright" style="width: 120px;">
+					<h:outputText value="R$ 2.526,80" />
+				</p:column>
+				
+				<p:column headerText="Status" style="width: 100px;">
+					<h:outputText value="Emitido" />
+				</p:column>
+			
+				<p:column style="text-align: center; width: 50px;">
+					<p:button icon="ui-icon-pencil" title="Editar" />
+				</p:column>
+			</p:dataTable>
+			
+		</h:form>
+	</ui:define>
+
+</ui:composition>

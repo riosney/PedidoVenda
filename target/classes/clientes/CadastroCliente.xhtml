@@ -1,0 +1,155 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">Novo Cliente</ui:define>
+	
+	<ui:define name="corpo">
+	<h:form>
+		<h1>Novo Cliente</h1>
+		
+		<p:messages autoUpdate="true" />
+		
+		<p:toolbar styleClass="menuTopo">
+			<p:toolbarGroup>
+				<p:button value="Novo" outcome="/clientes/CadastroCliente" />
+				<p:commandButton value="Salvar" id="botaoSalvar"
+					action="#{cadastroClienteBean.salvar}" />				
+			</p:toolbarGroup>
+			<p:toolbarGroup align="right">
+				<p:button value="Pesquisa" outcome="/clientes/PesquisaClientes" />
+			</p:toolbarGroup>
+		</p:toolbar>
+		
+		<p:panelGrid columns="2" id="painel" styleClass="panelCadastro"
+			columnClasses="rotulo, campo">
+			<p:outputLabel value="Nome" for="nome" />
+			<p:inputText id="nome" size="60" maxlength="80" value="#{cadastroClienteBean.cliente.nome}" />
+			
+			<p:outputLabel value="Tipo" for="tipo" />
+			<p:selectOneRadio id="tipo" value="#{cadastroClienteBean.cliente.tipo}">
+				<f:selectItem itemLabel="Física" />
+				<f:selectItem itemLabel="Jurídica" />
+			</p:selectOneRadio>
+			
+			<p:outputLabel value="CNPJ" for="cnpj" />
+			<p:inputText id="cnpj" size="20" maxlength="14" value="#{cadastroClienteBean.cliente.documentoReceitaFederal}" />
+			
+			<p:outputLabel value="E-mail" for="email" />
+			<p:inputText id="email" size="60" maxlength="60" value="#{cadastroClienteBean.cliente.email}" />			
+		</p:panelGrid>
+		
+		<br />
+		<p:commandButton value="Adicionar endereço" oncomplete="PF('confirmacaoEndereco').show();" />
+		
+		<p:dataTable id="enderecoTable" value="#{enderecoBean.enderecos}" var="endereco" 
+			styleClass="tableEndereco" emptyMessage="Nenhum endereço cadastrado."
+			rows="20" paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+			
+			<p:column headerText="Logradouro" style="width: 200px;">
+				<h:outputText value="Rua das Pedras Grandes Azuis" />
+			</p:column>
+			
+			<p:column headerText="Número" style="width: 20px;">
+				<h:outputText value="123" />
+			</p:column>
+			
+			<p:column headerText="Complemento" style="width: 60px;">
+				<h:outputText value="Ap 45" />
+			</p:column>
+			
+			<p:column headerText="CEP" style="width: 30px;">
+				<h:outputText value="60.345-557" />
+			</p:column>
+			
+			<p:column headerText="Cidade/UF" style="width: 60px;">
+				<h:outputText value="Fortaleza/CE" />
+			</p:column>
+			
+			<p:column style="text-align: center; width: 20px;">
+				<p:button icon="ui-icon-pencil" title="Editar" />
+				<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show();" />
+			</p:column>	
+		</p:dataTable>
+		
+		<p:confirmDialog header="Exclusão de endereço" widgetVar="confirmacaoExclusao"
+			message="Tem certeza que deseja excluir o endereço?">
+			<p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false;" />
+			<p:commandButton value="Sim" onclick="PF('confirmacaoExclusao').hide();" />
+		</p:confirmDialog>
+		
+		<p:confirmDialog header="Inclusão de endereço" widgetVar="confirmacaoEndereco">
+			<p:panelGrid columnClasses="rotulo, campo, rotulo, campo">
+				
+				<p:row>					
+					<p:column>			
+						<p:outputLabel value="Logradouro" for="logradouro" />
+					</p:column>
+					<p:column colspan="3">
+						<p:inputText id="logradouro" size="50" maxlength="150" 
+							 />
+					</p:column>
+				</p:row>
+			
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Número" for="numero" />
+					</p:column>
+					<p:column colspan="3">
+						<p:inputText id="numero" size="20" maxlength="20" />
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel value="Complemento" for="complemento" />
+					</p:column>
+					<p:column colspan="3">
+						<p:inputText id="complemento" size="60" maxlength="150" />
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel value="CEP" for="cep" />
+					</p:column>
+					<p:column colspan="3">
+						<p:inputText id="cep" size="20" maxlength="9" />
+					</p:column>				
+				</p:row>
+					
+				<p:row>
+					<p:column>			
+						<p:outputLabel value="Cidade" for="cidade" />
+					</p:column>
+					<p:column>
+						<p:inputText id="cidade" size="60" maxlength="60" />		
+					</p:column>
+					
+					<p:column>
+						<p:outputLabel value="UF" for="uf" />
+					</p:column>
+					<p:column>
+						<p:inputText id="uf" size="60" maxlength="60" />
+					</p:column>
+				</p:row>
+				
+				<p:row>
+					<p:column>
+						<p:outputLabel />
+					</p:column>
+					<p:column colspan="3">
+						<p:commandButton onclick="PF('confirmacaoEndereco').hide();" 
+							value="Incluir" />
+					</p:column>
+				</p:row>
+			
+			</p:panelGrid>
+		</p:confirmDialog>
+	</h:form>
+	</ui:define>
+	
+</ui:composition>
