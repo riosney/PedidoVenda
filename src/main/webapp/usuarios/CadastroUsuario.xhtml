@@ -39,35 +39,37 @@
 				<p:password id="senha" size="15" maxlength="20" required="true"
 					value="#{cadastroUsuarioBean.usuario.senha}" />
 				 
-				<p:selectOneMenu id="permissao" value="#{cadastroUsuarioBean.usuario.grupos}">
-					<f:selectItem itemLabel="Selecione o grupo" />
+				<p:selectOneMenu id="permissao" value="#{cadastroUsuarioBean.grupo}">					
+					<f:selectItem itemLabel="Selecione o grupo" itemDescription="true" />
 					<f:selectItems value="#{cadastroUsuarioBean.gruposRaizes}" var="grupo"
-						itemValue="#{grupo.id}" itemLabel="#{grupo.nome}" />
+						itemValue="#{grupo}" itemLabel="#{grupo.nome}" />
 				</p:selectOneMenu>
 				
 				<p:commandButton value="Adicionar grupo" update=":frmUsuario:usuariosGrupo"
-					action="#{cadastroUsuarioBean.carregarGrupo}" />
+					>
+					<p:collector unique="true" value="#{cadastroUsuarioBean.grupo}" 
+						addTo="#{cadastroUsuarioBean.usuario.grupos}" />
+				</p:commandButton>
 				
 			</p:panelGrid>
 			
-			<p:dataTable id="usuariosGrupo" value="#{cadastroUsuarioBean.gruposAtuais}" var="grupoatual"
+			<p:dataTable id="usuariosGrupo" value="#{cadastroUsuarioBean.usuario.grupos}" var="grupos"
 				styleClass="tableUsuarios" emptyMessage="Nenhum usuário encontrado." rows="20"
 				paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 				
 				<p:column headerText="Grupo" style="text-align: left;">
-					<h:outputText value="#{grupoatual.nome}" />
+					<h:outputText value="#{grupos.nome}" />
 				</p:column>
 				
 				<p:column style="width: 30px;">
-					<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="PF('confirmacaoExclusao').show();" />
+					
+					<p:commandButton update=":frmUsuario:usuariosGrupo"
+						process=":frmUsuario:usuariosGrupo" icon="ui-icon-trash">
+						<p:collector unique="true" removeFrom="#{cadastroUsuarioBean.usuario.grupos}"
+							value="#{grupos}" />
+					</p:commandButton>
 				</p:column>			
 			</p:dataTable>
-			
-			<p:confirmDialog header="Exclusão de grupo" message="Tem certeza que deseja excluir o grupo?"
-				widgetVar="confirmacaoExclusao">
-				<p:button value="Não" onclick="PF('confirmacaoExclusao').hide(); return false" />
-				<p:commandButton value="Sim" onclick="PF('confirmacaoExclusao').hide();" />
-			</p:confirmDialog>
 		</h:form>	
 	</ui:define>
 	

@@ -11,7 +11,7 @@ import com.escudo7.pedidovenda.util.cdi.CDIServiceLocator;
 
 @FacesConverter(forClass = Grupo.class)
 public class GrupoConverter implements Converter{
-	
+		
 	//@Inject
 	private Grupos grupos;
 	
@@ -34,9 +34,10 @@ public class GrupoConverter implements Converter{
 	@Override
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if(value != null){
-			//Grupo grupo = (Grupo) value;
-			//return grupo.getId() == null ? null : grupo.getId().toString();
-			return ((Grupo) value).getId().toString();
+			Grupo grupo = (Grupo) value;
+			return grupo.getId() == null ? null : grupo.getId().toString();
+			
+			//return ((Grupo) value).getId().toString();
 		}
 		return "";
 	}

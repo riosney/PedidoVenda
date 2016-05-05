@@ -15,58 +15,62 @@ import com.escudo7.pedidovenda.util.jsf.FacesUtil;
 
 @Named
 @ViewScoped
-public class CadastroUsuarioBean implements Serializable{
+public class CadastroUsuarioBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private Usuario usuario;
-	
+	private Grupo grupo;
+
 	@Inject
 	private CadastroUsuarioService cadastroUsuarioService;
-	
+
 	@Inject
 	private Grupos grupos;
-	
+
 	private List<Grupo> gruposRaizes;
-	private List<Grupo> gruposAtuais;
-	
+
 	public CadastroUsuarioBean() {
 		limpar();
 	}
-	
-	public void inicializar(){
+
+	public void inicializar() {
 		gruposRaizes = grupos.raizes();
 	}
-	
-	public void carregarGrupo(){
-		gruposAtuais = usuario.getGrupos();
-		//usuario.setGrupos(gruposRaizes);
+
+	public void carregarGrupo() {
+//		usuario.setGrupos(this.grupo);
 	}
-	
-	public void salvar(){	
+
+	public void salvar() {
 		this.usuario = cadastroUsuarioService.salvar(this.usuario);
 		limpar();
 		FacesUtil.addInfoMessage("Usuário salvo com sucesso!");
 	}
-	
-	public void limpar(){
+
+	public void limpar() {
 		usuario = new Usuario();
+		grupo = null;
 	}
-	
+
 	public Usuario getUsuario() {
 		return usuario;
 	}
-	
+
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-	
+
 	public List<Grupo> getGruposRaizes() {
 		return gruposRaizes;
 	}
-	
-	public List<Grupo> getGruposAtuais() {
-		return gruposAtuais;
+
+	public Grupo getGrupo() {
+		return grupo;
+	}
+
+	public void setGrupo(Grupo grupo) {
+		this.grupo = grupo;
 	}
 
 }
