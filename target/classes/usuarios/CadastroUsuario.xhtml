@@ -3,16 +3,18 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
 	
-	<ui:define name="titulo">Novo Usuário</ui:define>
+	<ui:define name="titulo">#{cadastroUsuarioBean.editando ? 'Edição de usuário' : 'Novo usuário'}</ui:define>
 	
 	<ui:define name="corpo">
 		<f:metadata>
+			<o:viewParam name="usuario" value="#{cadastroUsuarioBean.usuario}" />
 			<f:event listener="#{cadastroUsuarioBean.inicializar}" type="preRenderView" />
 		</f:metadata>
 		<h:form id="frmUsuario">
-			<h1>Novo Usuário</h1>
+			<h1>#{cadastroUsuarioBean.editando ? 'Edição de usuário' : 'Novo usuário'}</h1>
 			
 			<p:messages autoUpdate="true" closable="true" />
 			
@@ -45,8 +47,7 @@
 						itemValue="#{grupo}" itemLabel="#{grupo.nome}" />
 				</p:selectOneMenu>
 				
-				<p:commandButton value="Adicionar grupo" update=":frmUsuario:usuariosGrupo"
-					>
+				<p:commandButton value="Adicionar grupo" update=":frmUsuario:usuariosGrupo">
 					<p:collector unique="true" value="#{cadastroUsuarioBean.grupo}" 
 						addTo="#{cadastroUsuarioBean.usuario.grupos}" />
 				</p:commandButton>
